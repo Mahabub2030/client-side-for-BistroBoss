@@ -12,6 +12,8 @@ import Secret from "../pages/Shared/Secret/Secret";
 import Dashboard from "../Layout/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import AllUsers from "../pages/Dashboard/admin/allUsers";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import AdminRoute from "./AdminRoute";
 
 
   export const router = createBrowserRouter([
@@ -20,44 +22,61 @@ import AllUsers from "../pages/Dashboard/admin/allUsers";
       element: <Main></Main>,
       children: [
         {
-            path: '/',
-            element: <Home></Home>
-        }, 
-        {
-          path: 'menu', 
-          element: <Menu></Menu>
+          path: "/",
+          element: <Home></Home>,
         },
         {
-          path: 'order/:category',
-          element: <Order></Order>
+          path: "menu",
+          element: <Menu></Menu>,
         },
         {
-          path: 'login',
-          element: <Login></Login>
+          path: "order/:category",
+          element: <Order></Order>,
         },
         {
-          path: 'signup',
-          element: <SignUp></SignUp>
+          path: "login",
+          element: <Login></Login>,
         },
         {
-          path: 'secret',
-          element: <PrivateRoute><Secret></Secret></PrivateRoute>
-        }
-      ]
+          path: "signup",
+          element: <SignUp></SignUp>,
+        },
+        {
+          path: "secret",
+          element: (
+            <PrivateRoute>
+              <Secret></Secret>
+            </PrivateRoute>
+          ),
+        },
+      ],
     },
     {
-      path: 'dashboard',
+      path: "dashboard",
       element: <Dashboard></Dashboard>,
       children: [
+        // normal user routes
         {
-          path: 'cart',
-          element: <Cart></Cart>
+          path: "cart",
+          element: <Cart></Cart>,
         },
-        // admin routes
+        // admin routes only
         {
-          path: 'allusers',
-          element:<AllUsers></AllUsers>
-        }
-      ]
-    }
+          path: "addItems",
+          element: (
+            <AdminRoute>
+              <AddItems></AddItems>
+            </AdminRoute>
+          ),
+        },
+        {
+          path: "allusers",
+          element: (
+            <AdminRoute>
+              <AllUsers></AllUsers>
+            </AdminRoute>
+          ),
+        },
+      ],
+    },
   ]);
